@@ -1,12 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Add Image to Canvas from Element</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
+
 <body>
-    
+    <div id="app">
+        <form>
+            <img style="display:none"
+                src="http://iskconofescondido.com/wp-content/uploads/2019/03/blangko-kosong-e-ktp.jpg"
+                crossorigin="anonymous" />
+            <button type="submit">Save</button>
+        </form>
+
+        <p>{{x}}</p> <p>{{y}}</p>
+        <canvas id="canvas" v-bind:width="cwidth" v-bind:height="cheight"  style="border:1px solid #BBB;"
+        v-insert-data="ktp"
+        v-on:mousemove="updateXY">
+
+
+        ></canvas>
+        <!-- <input type="text" placeholder="nik" v-model="nik"/> -->
+        <input type="text" placeholder="Nama" v-model="ktp.nama"/>
+        <input type="text" placeholder="NIK" v-model="ktp.nik"/>
+        <input type="text" placeholder="TTL" v-model="ktp.ttl"/>
+        <input type="text" placeholder="JK" v-model="ktp.jk"/>
+        <input type="text" placeholder="Golongan Darah" v-model="ktp.goldar"/>
+        <input type="text" placeholder="Alamat" v-model="ktp.alamat"/>
+        <input type="text" placeholder="RT" v-model="ktp.rt"/>
+        <input type="text" placeholder="Kelurahan" v-model="ktp.kel"/>
+        <input type="text" placeholder="Kecamatan" v-model="ktp.kec"/>
+        <input type="text" placeholder="Agama" v-model="ktp.agama"/>
+        <input type="text" placeholder="Kawin" v-model="ktp.kawin"/>
+        <input type="text" placeholder="Pekerjaan" v-model="ktp.pekerjaan"/>
+        <input type="text" placeholder="KWN" v-model="ktp.kwn"/>
+        <input type="text" placeholder="Berlaku Hingga" v-model="ktp.berlaku"/>
+
+
+
+        <!-- <canvas id="canvas" /> -->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/components/ktp.js"></script>
+    <script src="./main.js"></script>
+
+    <script>
+        // window.onload = function () {
+
+        //     var image = document.getElementById('ktp');
+
+        //     fill_canvas(image);
+
+        //     function fill_canvas(img) {
+
+        //         var canvas = document.getElementById('canvas');
+        //         var ctx = canvas.getContext('2d');
+
+        //         canvas.width = $('img').width();
+        //         canvas.crossOrigin = "Anonymous";
+        //         canvas.height = $('img').height();
+        //         ctx.drawImage($('img').get(0), 0, 0);
+        //         ctx.font = "12pt Verdana";
+        //         $(document).on('input', '#nik', function () {
+        //             //redraw image
+        //             ctx.clearRect(0, 0, canvas.width, canvas.height)
+        //             ctx.drawImage($('img').get(0), 0, 0);
+        //             //refill text
+        //             ctx.fillStyle = "red";
+        //             ctx.fillText($(this).val(), 115, 75);
+        //         });
+        //         $(document).on('input', '#nama', function () {
+        //             //redraw image
+        //             ctx.drawImage($('img').get(0), 0, 0);
+        //             //refill text
+        //             ctx.fillStyle = "red";
+        //             ctx.fillText($(this).val(), 150, 75);
+        //         });
+        //         $('button').click(function () {
+        //             console.log(ctx.getImageData(50, 50, 100, 100));
+        //         });
+        //     }
+        // }
+    </script>
 </body>
+
 </html>
