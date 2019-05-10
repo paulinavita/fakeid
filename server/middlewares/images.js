@@ -8,10 +8,11 @@ const storage = Storage({
   keyFilename: process.env.KEYFILE_PATH
 })
 const bucket = storage.bucket(CLOUD_BUCKET)
-console.log('masuk 1');
+// console.log('masuk 1');
 
 const getPublicUrl = (filename) => {
-    
+  console.log(filename, 'masuk??');
+  
   return `https://storage.googleapis.com/${CLOUD_BUCKET}/${filename}`
 }
 
@@ -20,7 +21,7 @@ const sendUploadToGCS = (req, res, next) => {
     return next()
   }
 
-  const gcsname = Date.now() + req.file.originalname
+  const gcsname = Date.now() + req.file.originalName
   const file = bucket.file(gcsname)
 
   const stream = file.createWriteStream({

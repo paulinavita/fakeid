@@ -2,8 +2,10 @@ module.exports = function (req, res, next) {
     const fs = require('fs')
     console.log('masuk createfilepathhhhh')
     let image = req.body.image
+    // console.log(image);
+    
     const base64Data = image.replace(/^data:image\/png;base64,|^data:image\/jpeg;base64,/, "");
-    console.log(base64Data,"aaaaaa")
+    // console.log(base64Data,"aaaaaa")
     const newFilename = Date.now() + '.png'
     // const newFile = 'uploads/' + newFilename;
     // req.file = newFile
@@ -32,7 +34,7 @@ module.exports = function (req, res, next) {
             req.file = {}
             req.file.buffer = fs.readFileSync(newFilename)
             req.file.originalName = Date.now() + newFilename
-            req.file.mimetype = 'image/png'
+            req.file.mimetype = 'image/png'            
             next()
         }
     });
