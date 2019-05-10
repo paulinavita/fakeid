@@ -1,11 +1,16 @@
 <html>
+
 <head>
     <title>Fake Your ID</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v3.3"></script>
 </head>
+
 <body>
     <div id="app">
         <!-- NAV BAR STARTS HERE -->
@@ -186,6 +191,13 @@
                     <p>{{y}}</p> -->
                     <canvas style="border-style: none" id="canvas" v-bind:width="cwidth" v-bind:height="cheight"
                         style="border:1px solid #BBB;"></canvas>Î
+
+                        <!-- button facebook -->
+                    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/"
+                        data-layout="button_count" data-size="large"><a target="_blank"
+                            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+                            class="fb-xfbml-parse-ignore">Bagikan</a></div>
+                            <!-- end button facebook -->
                 </div>
             </div>
             <!-- MAIN TWO SECTION OF PAGE FORM & TEMPLATE -->
@@ -215,14 +227,15 @@
     <script src="./main.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+        </script>
     <script>
     </script>
 </body>
+
 </html>
