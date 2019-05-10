@@ -156,6 +156,5 @@ new Vue({
         'ktp.kwn': function() {
             this.watchKTP()
         },
-        'ktp.'
     }
 })
