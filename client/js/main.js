@@ -6,8 +6,8 @@ new Vue({
     ktp : {
         nama : '',
         nik : '',
-        ttl : '',
-        ttl : '',
+        tmpLahir : '',
+        tngglLahir : '',
         jk : '',
         goldar : '',
         alamat : '',
