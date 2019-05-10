@@ -1,5 +1,6 @@
 var Axios = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'http://localhost:3000',
+    
 });
 
 let app = new Vue({
@@ -80,7 +81,9 @@ let app = new Vue({
         screenshot() {
             html2canvas(document.getElementById('canvas'), {allowTaint: true })
             .then( (canvas) => {     
-                document.body.appendChild(canvas);
+                // document.body.appendChild(canvas);
+                $('#canvas').hide()
+                $('#apalah').append(canvas)
                 
                 var base64URL = canvas.toDataURL('image/png')
                Axios({
