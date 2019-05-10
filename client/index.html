@@ -2,6 +2,9 @@
 
 <head>
     <title>Fake Your ID</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -9,20 +12,207 @@
 
 <body>
     <div id="app">
-        <form>
-            <img
-                style="display: none"
-                id="ktp-template-img"
-                src="./blangko.jpg"
-                crossorigin="anonymous"
-            />
+        <!-- NAV BAR STARTS HERE -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Fake KTP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" v-on:click="goToMain">Generate KTP <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <span class="navbar-text">
+                    FAKEID
+                </span>
+            </div>
+        </nav>
+        <!-- NAV BAR ENDS HERE -->
 
-        </form>
 
-        <p>{{x}}</p> <p>{{y}}</p>
-        <canvas id="canvas" v-bind:width="cwidth" v-bind:height="cheight"  style="border:1px solid #BBB;"></canvas>
-        <!-- <input type="text" placeholder="nik" v-model="nik"/> -->
-        <input type="text" placeholder="Nama" v-model="ktp.nama"/>
+        <!-- SLIDER STARTS HERE -->
+        <div v-if="currentPage == 'home'" style="margin: 0 auto; max-width: 600px; max-height: 400px;">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-top: 10em;">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://3.bp.blogspot.com/-lzAAqNZdNh4/WQgk7-1xtHI/AAAAAAAAAE8/iFdHZs9BuesyCvCsJawuKoMCSPt2h3wbQCEw/s1600/Screenshot_13.png"
+                            class="w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i.ytimg.com/vi/lKcHcOnf70A/maxresdefault.jpg" class="w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://1.bp.blogspot.com/-cn7JYiyKueg/WjxpT0w0VzI/AAAAAAAAAQM/3T2GitoWDgA3tkfjMumohN3GslbGtxGSACLcBGAs/s1600/fakektp-47500be4277fccb974d2396d369fd444-meoncovercomguest.jpg"
+                            class="w-100" alt="...">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!-- SLIDER ENDS HERE -->
+
+        <!-- MAIN FORM STARTS HERE -->
+        <div class="container mt-5">
+
+            <!-- GET DOM IMAGE -->
+            <form>
+                <img style="display: none" id="ktp-template-img" src="./blangko.jpg" crossorigin="anonymous" />
+            </form>
+            <!-- END GET DOM IMAGE -->
+
+            <!-- MAIN TWO SECTION OF PAGE FORM & TEMPLATE -->
+            <div v-if="currentPage == 'main'" class="row">
+                <h3>Masukkan Identitas Untuk Segera Mendapatkan KTP Palsumu</h3>
+                <div class="col-6">
+                    <p>Harap masukkan foto terlebih dahulu :</p>
+                    <input  v-on:change="getImage" id="file-upload" type="file"/>
+                    <!-- <inputtype="file" class="custom-file-input" id="customFile" name="hehe"> -->
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">NIK</span>
+                        </div>
+                        <input v-model="ktp.nik" type="text" aria-label="First name" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">First and last name</span>
+                        </div>
+                        <input v-model="ktp.nama" type="text" aria-label="First name" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Alamat</span>
+                        </div>
+                        <input v-model="ktp.alamat" type="text" aria-label="First name" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Tempat & tanggal lahir</span>
+                        </div>
+                        <input v-model="ktp.ttl" type="text" aria-label="Tempat tanggal lahir" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Jenis
+                                Kelamin</label>
+                        </div>
+                        <select class="custom-select" v-model="ktp.jk">
+                            <option selected>Pilihan</option>
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Golongan
+                                Darah</label>
+                        </div>
+                        <select class="custom-select" v-model="ktp.goldar">
+                            <option selected>Pilihan</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                            <option value="O">O</option>
+                        </select>
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">RT/RW</span>
+                        </div>
+                        <input v-model="ktp.rt" type="text" aria-label="Rt" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Kelurahan</span>
+                        </div>
+                        <input v-model="ktp.kel" type="text" aria-label="keluarahan" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Kecamatan</span>
+                        </div>
+                        <input v-model="ktp.kec" type="text" aria-label="kecamatan" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Agama</label>
+                        </div>
+                        <select v-model="ktp.agama" class="custom-select">
+                            <option selected>Pilihan</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Konghucu">Konghucu</option>
+                        </select>
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Pernikahan</label>
+                        </div>
+                        <select v-model="ktp.kawin" class="custom-select" id="pernikahan">
+                            <option selected>Pilihan</option>
+                            <option value="Kawin">Kawin</option>
+                            <option value="Belum Kawin">Belum</option>
+                        </select>
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Perkerjaan</span>
+                        </div>
+                        <input v-model="ktp.pekerjaan" type="text" aria-label="First name" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Kewarganeagaraan</span>
+                        </div>
+                        <input v-model="ktp.kwn" type="text" aria-label="First name" class="form-control">
+                    </div>
+                    <button class="ml-2 mt-4 btn btn-dark" v-on:click.prevent="screenshot">BUAT KTP SAYA</button>
+                </div>
+
+
+                <div v-if="currentPage == 'main'" class="col-6">
+                    <!-- <p>{{x}}</p>
+                    <p>{{y}}</p> -->
+                    <canvas style="border-style: none" id="canvas" v-bind:width="cwidth" v-bind:height="cheight"
+                        style="border:1px solid #BBB;"></canvas>
+                    <div id="apalah"></div>
+                    
+                    <div v-if="share !== ''">
+                        <a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook" content="goblok" ><img
+                            src="https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png"
+                            style="width: 30px;" alt="" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- MAIN TWO SECTION OF PAGE FORM & TEMPLATE -->
+
+        </div>
+    </div>
+
+
+
+
+    <!-- <input type="text" placeholder="nik" v-model="nik"/> -->
+    <!-- <input type="text" placeholder="Nama" v-model="ktp.nama"/>
         <input type="text" placeholder="NIK" v-model="ktp.nik"/>
         <input type="text" placeholder="TTL" v-model="ktp.ttl"/>
         <input type="text" placeholder="JK" v-model="ktp.jk"/>
@@ -36,57 +226,26 @@
         <input type="text" placeholder="Pekerjaan" v-model="ktp.pekerjaan"/>
         <input type="text" placeholder="KWN" v-model="ktp.kwn"/>
         <input type="text" placeholder="Berlaku Hingga" v-model="ktp.berlaku"/>
-        <!-- <img src="https://1.bp.blogspot.com/-sporyQjyNms/WPBDKcnMUhI/AAAAAAAAGnE/HSIOH0oN9788ze1z4LKES_lZj0dUwbgGQCLcB/s1600/Pas%2BFoto%2BSBMPTN%2BTerbaru.png" style="max-width:50%" /> -->
         <button v-on:click.prevent="screenshot">BUAT KTP SAYA</button>
-        <button v-on:change="getImage"></button>
+        <button v-on:change="getImage"></button> -->
     </div>
 
-   
+
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-
-        <!-- <canvas id="canvas" /> -->
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="/components/ktp.js"></script>
     <script src="./main.js"></script>
-
-    <script>
-        // window.onload = function () {
-
-        //     var image = document.getElementById('ktp');
-
-        //     fill_canvas(image);
-
-        //     function fill_canvas(img) {
-
-        //         var canvas = document.getElementById('canvas');
-        //         var ctx = canvas.getContext('2d');
-
-        //         canvas.width = $('img').width();
-        //         canvas.crossOrigin = "Anonymous";
-        //         canvas.height = $('img').height();
-        //         ctx.drawImage($('img').get(0), 0, 0);
-        //         ctx.font = "12pt Verdana";
-        //         $(document).on('input', '#nik', function () {
-        //             //redraw image
-        //             ctx.clearRect(0, 0, canvas.width, canvas.height)
-        //             ctx.drawImage($('img').get(0), 0, 0);
-        //             //refill text
-        //             ctx.fillStyle = "red";
-        //             ctx.fillText($(this).val(), 115, 75);
-        //         });
-        //         $(document).on('input', '#nama', function () {
-        //             //redraw image
-        //             ctx.drawImage($('img').get(0), 0, 0);
-        //             //refill text
-        //             ctx.fillStyle = "red";
-        //             ctx.fillText($(this).val(), 150, 75);
-        //         });
-        //         $('button').click(function () {
-        //             console.log(ctx.getImageData(50, 50, 100, 100));
-        //         });
-        //     }
-        // }
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script language="javascript">
+            function fbshareCurrentPage() { window.open("https://www.facebook.com/sharer/sharer.php?u=" + escape(`${app.share}`) + "&t=" , 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'); return false; }
     </script>
 </body>
 
