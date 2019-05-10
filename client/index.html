@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fake Your ID</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
-
 <body>
     <div id="app">
-
+        <!-- NAV BAR STARTS HERE -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">Fake KTP</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
@@ -37,11 +32,8 @@
                 </span>
             </div>
         </nav>
-
-
-
-
-
+        <!-- NAV BAR ENDS HERE -->
+        <!-- SLIDER STARTS HERE -->
         <div style="margin: 0 auto; max-width: 600px; max-height: 400px;">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-top: 10em;">
                 <ol class="carousel-indicators">
@@ -72,57 +64,165 @@
                 </a>
             </div>
         </div>
-
-        <div class="container" style="max-width: 1500px;">
-            <div class="row" style="margin-top:5em">
-                <div class="col-5">
-                    <div style="overflow-y: scroll; height:700px">
-                        <form>
-                            <h3>Personal Info</h3>
-                            <form-add-ktp v-on:add-ktp="createKtp" />
-
-                        </form>
+        <!-- SLIDER ENDS HERE -->
+        <!-- MAIN FORM STARTS HERE -->
+        <div class="container mt-5">
+            <!-- GET DOM IMAGE -->
+            <form>
+                <img style="display: none" id="ktp-template-img" src="./blangko.jpg" crossorigin="anonymous" />
+            </form>
+            <!-- END GET DOM IMAGE -->
+            <!-- MAIN TWO SECTION OF PAGE FORM & TEMPLATE -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">NIK</span>
+                        </div>
+                        <input v-model="ktp.nik" type="text" aria-label="First name" class="form-control">
                     </div>
-
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">First and last name</span>
+                        </div>
+                        <input v-model="ktp.nama" type="text" aria-label="First name" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Alamat</span>
+                        </div>
+                        <input v-model="ktp.alamat" type="text" aria-label="First name" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Tempat & tanggal lahir</span>
+                        </div>
+                        <input v-model="ktp.ttl.lahir" type="text" aria-label="Tempat" class="form-control">
+                        <input v-model="ktp.ttl.tempat" type="date" aria-label="Tanggal Lahir" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Jenis
+                                Kelamin</label>
+                        </div>
+                        <select class="custom-select" v-model="ktp.jk">
+                            <option selected>Pilihan</option>
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Golongan
+                                Darah</label>
+                        </div>
+                        <select class="custom-select" v-model="ktp.goldar">
+                            <option selected>Pilihan</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                            <option value="O">O</option>
+                        </select>
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">RT/RW</span>
+                        </div>
+                        <input v-model="ktp.rt" type="text" aria-label="Rt" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Kelurahan</span>
+                        </div>
+                        <input v-model="ktp.kel" type="text" aria-label="keluarahan" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Kecamatan</span>
+                        </div>
+                        <input v-model="ktp.kec" type="text" aria-label="kecamatan" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Agama</label>
+                        </div>
+                        <select v-model="ktp.agama" class="custom-select">
+                            <option selected>Pilihan</option>
+                            <option value="kristen">Kristen</option>
+                            <option value="islam">Islam</option>
+                            <option value="islam">Katolik</option>
+                            <option value="islam">Hindu</option>
+                            <option value="islam">Buddha</option>
+                            <option value="islam">Konghucu</option>
+                        </select>
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Pernikahan</label>
+                        </div>
+                        <select v-model="ktp.kawin" class="custom-select" id="pernikahan">
+                            <option selected>Pilihan</option>
+                            <option value="Kawin">Kawin</option>
+                            <option value="Belum Kawin">Belum</option>
+                        </select>
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Perkerjaan</span>
+                        </div>
+                        <input v-model="ktp.pekerjaan" type="text" aria-label="First name" class="form-control">
+                    </div>
+                    <div class="input-group p-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Kewarganeagaraan</span>
+                        </div>
+                        <input v-model="ktp.kwn" type="text" aria-label="First name" class="form-control">
+                    </div>
+                    <button class="btn btn-dark" v-on:click.prevent="screenshot">BUAT KTP SAYA</button>
+                    <button class="btn btn-dark" v-on:change="getImage"> MASUKKAN FOTO </button>
                 </div>
-                <div class="col-md-7">
-                    <!-- <form action="" method="post"> </form> -->
-                    <form>
-                        <img style="display:none"
-                            src="http://iskconofescondido.com/wp-content/uploads/2019/03/blangko-kosong-e-ktp.jpg"
-                            crossorigin="anonymous" />
-                        <button type="submit">Save</button>
-                    </form>
-
-                    <p>{{x}}</p>
-                    <p>{{y}}</p>
-                    <canvas id="canvas" v-bind:width="cwidth" v-bind:height="cheight" style="border:1px solid #BBB;"
-                        v-insert-data="ktp" v-on:mousemove="updateXY">
-                        </canvas>
-
+                <div class="col-6">
+                    <!-- <p>{{x}}</p>
+                    <p>{{y}}</p> -->
+                    <canvas style="border-style: none" id="canvas" v-bind:width="cwidth" v-bind:height="cheight"
+                        style="border:1px solid #BBB;"></canvas>Î
                 </div>
             </div>
+            <!-- MAIN TWO SECTION OF PAGE FORM & TEMPLATE -->
         </div>
     </div>
+    <!-- <input type="text" placeholder="nik" v-model="nik"/> -->
+    <!-- <input type="text" placeholder="Nama" v-model="ktp.nama"/>
+        <input type="text" placeholder="NIK" v-model="ktp.nik"/>
+        <input type="text" placeholder="TTL" v-model="ktp.ttl"/>
+        <input type="text" placeholder="JK" v-model="ktp.jk"/>
+        <input type="text" placeholder="Golongan Darah" v-model="ktp.goldar"/>
+        <input type="text" placeholder="Alamat" v-model="ktp.alamat"/>
+        <input type="text" placeholder="RT" v-model="ktp.rt"/>
+        <input type="text" placeholder="Kelurahan" v-model="ktp.kel"/>
+        <input type="text" placeholder="Kecamatan" v-model="ktp.kec"/>
+        <input type="text" placeholder="Agama" v-model="ktp.agama"/>
+        <input type="text" placeholder="Kawin" v-model="ktp.kawin"/>
+        <input type="text" placeholder="Pekerjaan" v-model="ktp.pekerjaan"/>
+        <input type="text" placeholder="KWN" v-model="ktp.kwn"/>
+        <input type="text" placeholder="Berlaku Hingga" v-model="ktp.berlaku"/>
+        <button v-on:click.prevent="screenshot">BUAT KTP SAYA</button>
+        <button v-on:change="getImage"></button> -->
     </div>
-
-
-
-
-
-
-    <script src="./js/form-add-ktp.js"></script>
-    <script src="./js/main.js"></script>
-
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/components/ktp.js"></script>
+    <script src="./main.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script>
+    </script>
 </body>
-
 </html>
