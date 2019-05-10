@@ -49,20 +49,29 @@ new Vue({
             this.x = event.offsetX;
             this.y = event.offsetY;
         },
-        
+        getImage() {
+
+        },
         screenshot() {
             html2canvas(document.getElementById('canvas'), {allowTaint: true })
             .then( (canvas) => {      
-                console.log(canvas, 'apa');   
+                // console.log(canvas, 'apa');   
                 document.body.appendChild(canvas);
-                console.log(canvas.toDataURL('image/png'), '------')
+                // console.log(canvas.toDataURL('image/png'), '------')
                 
                 var base64URL = canvas.toDataURL('image/png')
+                // console.log(base64URL, 'hahahahahahah!');
+                
                 // .replace('image/png', 'image/octet-stream');
-                axios.
-                post(`${baseURL}/upload`,{
-                    image: base64URL
-                })
+               
+               Axios({
+                   method : 'post',
+                   url : `/upload`,
+                   maxContentLength : 100000000,
+                   data : {
+                    image : base64URL,
+                   },
+               })
                 .then(({data}) => {
                     console.log('masuk sini')
                     console.log('datanya', data);
@@ -74,9 +83,9 @@ new Vue({
                     
                 })
                 .catch((err) => {
-                    console.log(err)
+                    // console.log(err.response)
                 })
-                console.log(base64URL)
+                // console.log(base64URL)
             })
         }, 
           
@@ -144,6 +153,7 @@ new Vue({
         },
         'ktp.kwn': function() {
             this.watchKTP()
-        }
+        },
+        'ktp.'
     }
 })
