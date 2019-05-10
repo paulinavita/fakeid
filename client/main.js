@@ -5,6 +5,7 @@ var Axios = axios.create({
 new Vue({
     el: '#app',
    data : {
+    currentPage : '',
     x :0,
     y :0,
     image : '',
@@ -12,10 +13,7 @@ new Vue({
     ktp : {
         nama : '',
         nik : '',
-        ttl : {
-            lahir : '',
-            tempat : '',
-        },
+        ttl : '',
         jk : '',
         goldar : '',
         alamat : '',
@@ -26,7 +24,8 @@ new Vue({
         kawin : '',
         pekerjaan : '',
         kwn : '',
-        berlaku : 'SEUMUR HIDUP'
+        berlaku : 'SEUMUR HIDUP',
+        foto : ''
     },
     image : "",
     cwidth: "" , 
@@ -34,6 +33,7 @@ new Vue({
 
    },
    created() {
+    this.currentPage = 'home'
     this.cwidth = $('img').width()
     this.cheight = $('img').height();
    },
@@ -52,23 +52,36 @@ new Vue({
             this.x = event.offsetX;
             this.y = event.offsetY;
         },
+        goToMain() {
+            this.currentPage = 'main'
+        },
         getImage() {
             this.image = event.target.files[0]
             let formData = new FormData()
             formData.append('image', this.image)
+
+            Axios.post(`/ktpfoto`, formData, {headers: {
+                'token': localStorage.getItem('token'),
+                "Content-Type": "multipart/form-data",
+            }})
+            .then(({data}) => {
+                this.ktp.foto = data.cloudStoragePublicUrl
+                console.log(data.cloudStoragePublicUrl);
+                
+                
+            })
+            .catch(err => {
+                console.log('hayo error', err);
+                
+            })
+            console.log('disini', this.image, '//////////');  
         },
         screenshot() {
             html2canvas(document.getElementById('canvas'), {allowTaint: true })
             .then( (canvas) => {      
-                // console.log(canvas, 'apa');   
                 document.body.appendChild(canvas);
-                // console.log(canvas.toDataURL('image/png'), '------')
                 
                 var base64URL = canvas.toDataURL('image/png')
-                // console.log(base64URL, 'hahahahahahah!');
-                
-                // .replace('image/png', 'image/octet-stream');
-               
                Axios({
                    method : 'post',
                    url : `/upload`,
@@ -80,17 +93,11 @@ new Vue({
                 .then(({data}) => {
                     console.log('masuk sini')
                     console.log('datanya', data);
-                    
-                    // this.imageUrl = data.data
-                    // this.imageUrlTwitter=`https://twitter.com/share?url=&text=${this.imageUrl}&via=[via]&hashtags=[hashtags]`
-                    // console.log(this.imageUrlTwitter)
-                    // console.log(imageUrl,"++++++++++++++")
-                    
                 })
                 .catch((err) => {
-                    // console.log(err.response)
+                    console.log(err);
+                    
                 })
-                // console.log(base64URL)
             })
         }, 
           
@@ -116,6 +123,12 @@ new Vue({
                 ctx.fillText(this.ktp.pekerjaan, 125, 235);
                 ctx.fillText(this.ktp.kwn, 125, 250);
                 ctx.fillText(this.ktp.berlaku, 125, 265);
+            }
+            
+            let orang = new Image();
+            orang.src = this.ktp.foto
+            orang.onload = () => {
+                ctx.drawImage(orang, 363, 60, 116, 150);
             }
         }
     },
@@ -159,5 +172,8 @@ new Vue({
         'ktp.kwn': function() {
             this.watchKTP()
         },
+        'ktp.foto': function() {
+            this.watchKTP()
+        }
     }
 })

@@ -22,17 +22,11 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Generate KTP <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link" v-on:click="goToMain">Generate KTP <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
                 <span class="navbar-text">
-                    Navbar text with an inline element
+                    FAKEID
                 </span>
             </div>
         </nav>
@@ -40,7 +34,7 @@
 
 
         <!-- SLIDER STARTS HERE -->
-        <div style="margin: 0 auto; max-width: 600px; max-height: 400px;">
+        <div v-if="currentPage == 'home'" style="margin: 0 auto; max-width: 600px; max-height: 400px;">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-top: 10em;">
                 <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -82,9 +76,12 @@
             <!-- END GET DOM IMAGE -->
 
             <!-- MAIN TWO SECTION OF PAGE FORM & TEMPLATE -->
-            <div class="row">
+            <div v-if="currentPage == 'main'" class="row">
+                <h3>Masukkan Identitas Untuk Segera Mendapatkan KTP Palsumu</h3>
                 <div class="col-6">
-
+                    <p>Harap masukkan foto terlebih dahulu :</p>
+                    <input  v-on:change="getImage" id="file-upload" type="file"/>
+                    <!-- <inputtype="file" class="custom-file-input" id="customFile" name="hehe"> -->
                     <div class="input-group p-1">
                         <div class="input-group-prepend">
                             <span class="input-group-text">NIK</span>
@@ -107,8 +104,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Tempat & tanggal lahir</span>
                         </div>
-                        <input v-model="ktp.ttl.lahir" type="text" aria-label="Tempat" class="form-control">
-                        <input v-model="ktp.ttl.tempat" type="date" aria-label="Tanggal Lahir" class="form-control">
+                        <input v-model="ktp.ttl" type="text" aria-label="Tempat tanggal lahir" class="form-control">
                     </div>
                     <div class="input-group p-1">
                         <div class="input-group-prepend">
@@ -158,12 +154,12 @@
                         </div>
                         <select v-model="ktp.agama" class="custom-select">
                             <option selected>Pilihan</option>
-                            <option value="kristen">Kristen</option>
-                            <option value="islam">Islam</option>
-                            <option value="islam">Katolik</option>
-                            <option value="islam">Hindu</option>
-                            <option value="islam">Buddha</option>
-                            <option value="islam">Konghucu</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Konghucu">Konghucu</option>
                         </select>
                     </div>
                     <div class="input-group p-1">
@@ -188,16 +184,15 @@
                         </div>
                         <input v-model="ktp.kwn" type="text" aria-label="First name" class="form-control">
                     </div>
-                    <button class="btn btn-dark" v-on:click.prevent="screenshot">BUAT KTP SAYA</button>
-                    <button class="btn btn-dark" v-on:change="getImage"> MASUKKAN FOTO </button>
+                    <button class="ml-2 mt-4 btn btn-dark" v-on:click.prevent="screenshot">BUAT KTP SAYA</button>
                 </div>
 
 
-                <div class="col-6">
+                <div v-if="currentPage == 'main'" class="col-6">
                     <!-- <p>{{x}}</p>
                     <p>{{y}}</p> -->
                     <canvas style="border-style: none" id="canvas" v-bind:width="cwidth" v-bind:height="cheight"
-                        style="border:1px solid #BBB;"></canvas>Î
+                        style="border:1px solid #BBB;"></canvas>
                 </div>
             </div>
             <!-- MAIN TWO SECTION OF PAGE FORM & TEMPLATE -->
