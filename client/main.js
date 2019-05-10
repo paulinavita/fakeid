@@ -3,10 +3,12 @@ new Vue({
    data : {
     x :0,
     y :0,
+    image : '',
+    url : "http://iskconofescondido.com/wp-content/uploads/2019/03/blangko-kosong-e-ktp.jpg",
     ktp : {
-        nama : '',
-        nik : '',
-        ttl : '',
+        nama : 'Azhar',
+        nik : '1234',
+        ttl : '1234',
         ttl : '',
         jk : '',
         goldar : '',
@@ -22,7 +24,8 @@ new Vue({
 
     },
     cwidth: "" , 
-    cheight: "" 
+    cheight: "" ,
+    yey : null
 
    },
    created() {
@@ -33,16 +36,31 @@ new Vue({
         updateXY: function(event) {
             this.x = event.offsetX;
             this.y = event.offsetY;
+        },
+        screenshot() {
+            console.log(this.yey);
             
+            // console.log(document.getElementById('can'))
+            // html2canvas(document.getElementById('canvas'), {allowTaint: true, allowCORS : true })
+            // .then( (canvas) => {
+                
+            //     console.log(canvas, 'apa');   
+            //     document.body.appendChild(canvas);
+            //     console.log(canvas.toDataURL('image/png'), '------')
+            // })
+        },
+        getImage(event) {
+            this.image = event.target.files[0]
+            console.log('disini', this.image, '//////////');
         }
-        
     },
     directives : {
-        insertData : function (canvasElement, ktp, posX, posY) {
+        insertData : function (canvasElement, ktp) {
             console.log(ktp.value);
+            console.log(canvasElement, 'ini apa');
             
+            this.yey = canvasElement
             var ctx = canvasElement.getContext("2d");
-            ctx.save()
             ctx.clearRect(0, 0, canvas.width, canvas.height)
             ctx.drawImage($('img').get(0), 0, 0);
             ctx.fillText(ktp.value.nik, 115, 75);
@@ -60,8 +78,13 @@ new Vue({
             ctx.fillText(ktp.value.kwn, 125, 250);
             ctx.fillText(ktp.value.berlaku, 125, 265);
 
-
-            ctx.restore()
+            // var imageObj = new Image();
+            // imageObj.src = 'https://1.bp.blogspot.com/-sporyQjyNms/WPBDKcnMUhI/AAAAAAAAGnE/HSIOH0oN9788ze1z4LKES_lZj0dUwbgGQCLcB/s1600/Pas%2BFoto%2BSBMPTN%2BTerbaru.png';
+            // imageObj.onload = function () {
+            //     ctx.drawImage(imageObj, 363, 60, 116, 150);
+            // }
+            // ctx.save()
+            
         }
         
     }

@@ -15,11 +15,10 @@
         </form>
 
         <p>{{x}}</p> <p>{{y}}</p>
-        <canvas id="canvas" v-bind:width="cwidth" v-bind:height="cheight"  style="border:1px solid #BBB;"
+        <canvas ref="canvas" id="canvas" v-bind:width="cwidth" v-bind:height="cheight"  style="border:1px solid #BBB;"
         v-insert-data="ktp"
-        v-on:mousemove="updateXY">
-
-
+        v-on:mousemove="updateXY"
+        >
         ></canvas>
         <!-- <input type="text" placeholder="nik" v-model="nik"/> -->
         <input type="text" placeholder="Nama" v-model="ktp.nama"/>
@@ -36,13 +35,14 @@
         <input type="text" placeholder="Pekerjaan" v-model="ktp.pekerjaan"/>
         <input type="text" placeholder="KWN" v-model="ktp.kwn"/>
         <input type="text" placeholder="Berlaku Hingga" v-model="ktp.berlaku"/>
+        <input v-on:change="getImage" type="file">
+        <!-- <img src="https://1.bp.blogspot.com/-sporyQjyNms/WPBDKcnMUhI/AAAAAAAAGnE/HSIOH0oN9788ze1z4LKES_lZj0dUwbgGQCLcB/s1600/Pas%2BFoto%2BSBMPTN%2BTerbaru.png" style="max-width:50%" /> -->
+        <button v-on:click.prevent="screenshot">BUAT KTP SAYA</button>
 
-
-
-        <!-- <canvas id="canvas" /> -->
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     <script src="/components/ktp.js"></script>
     <script src="./main.js"></script>
 
