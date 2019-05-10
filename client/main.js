@@ -24,8 +24,8 @@ new Vue({
         pekerjaan : '',
         kwn : '',
         berlaku : 'SEUMUR HIDUP'
-
     },
+    image : "",
     cwidth: "" , 
     cheight: "" 
 
@@ -50,7 +50,9 @@ new Vue({
             this.y = event.offsetY;
         },
         getImage() {
-
+            this.image = event.target.files[0]
+            let formData = new FormData()
+            formData.append('image', this.image)
         },
         screenshot() {
             html2canvas(document.getElementById('canvas'), {allowTaint: true })
