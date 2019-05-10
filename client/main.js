@@ -12,7 +12,10 @@ new Vue({
     ktp : {
         nama : '',
         nik : '',
-        ttl : '',
+        ttl : {
+            lahir : '',
+            tempat : '',
+        },
         jk : '',
         goldar : '',
         alamat : '',
