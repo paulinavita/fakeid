@@ -2,13 +2,14 @@ var Axios = axios.create({
     baseURL: 'http://localhost:3000'
 });
 
-new Vue({
+let app = new Vue({
     el: '#app',
    data : {
     currentPage : '',
     x :0,
     y :0,
     image : '',
+    share : '',
     url : "./blangko.png",
     ktp : {
         nama : '',
@@ -78,7 +79,7 @@ new Vue({
         },
         screenshot() {
             html2canvas(document.getElementById('canvas'), {allowTaint: true })
-            .then( (canvas) => {      
+            .then( (canvas) => {     
                 document.body.appendChild(canvas);
                 
                 var base64URL = canvas.toDataURL('image/png')
@@ -93,6 +94,9 @@ new Vue({
                 .then(({data}) => {
                     console.log('masuk sini')
                     console.log('datanya', data);
+                    console.log(data.cloudStoragePublicUrl, 'HEHEHEHEHE');
+                    
+                    this.share = data.cloudStoragePublicUrl
                 })
                 .catch((err) => {
                     console.log(err);

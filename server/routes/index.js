@@ -9,6 +9,6 @@ router.get('/', (req, res) => {
 })
 
 router.post('/upload', createFilePath, images.sendUploadToGCS, Controller.postPicture)
-router.post('/ktpfoto', images.multer.single('image'), images.sendUploadToGCS, Controller.addKTPphoto)
+router.post('/ktpfoto', images.multer.single('image'), images2.sendUploadToGCS, Controller.addKTPphoto)
 
 module.exports = router

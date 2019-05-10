@@ -193,6 +193,14 @@
                     <p>{{y}}</p> -->
                     <canvas style="border-style: none" id="canvas" v-bind:width="cwidth" v-bind:height="cheight"
                         style="border:1px solid #BBB;"></canvas>
+                    <div id="apalah"></div>
+                    
+                    <div v-if="share !== ''">
+                        <a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook" content="goblok" ><img
+                            src="https://assets.cobaltnitra.com/teams/repository/export/685/994e08a161005809f00505692530e/685994e08a161005809f00505692530e.png"
+                            style="width: 30px;" alt="" />
+                        </a>
+                    </div>
                 </div>
             </div>
             <!-- MAIN TWO SECTION OF PAGE FORM & TEMPLATE -->
@@ -236,9 +244,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-
-    <script>
-
+    <script language="javascript">
+            function fbshareCurrentPage() { window.open("https://www.facebook.com/sharer/sharer.php?u=" + escape(`${app.share}`) + "&t=" , 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600'); return false; }
     </script>
 </body>
 
