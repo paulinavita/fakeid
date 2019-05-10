@@ -14,11 +14,15 @@
                 src="http://iskconofescondido.com/wp-content/uploads/2019/03/blangko-kosong-e-ktp.jpg"
                 crossorigin="anonymous"
             />
-            <button type="submit">Save</button>
+
         </form>
 
         <p>{{x}}</p> <p>{{y}}</p>
-        <canvas id="canvas" v-bind:width="cwidth" v-bind:height="cheight"  style="border:1px solid #BBB;">
+        <canvas id="canvas" v-bind:width="cwidth" v-bind:height="cheight"  style="border:1px solid #BBB;"
+        v-insert-data="ktp"
+        v-on:mousemove="updateXY">
+
+
         ></canvas>
         <!-- <input type="text" placeholder="nik" v-model="nik"/> -->
         <input type="text" placeholder="Nama" v-model="ktp.nama"/>
@@ -41,8 +45,12 @@
 
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+   
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+        <!-- <canvas id="canvas" /> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="/components/ktp.js"></script>
     <script src="./main.js"></script>
 
