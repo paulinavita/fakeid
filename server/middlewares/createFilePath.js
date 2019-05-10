@@ -1,8 +1,10 @@
 module.exports = function (req, res, next) {
-    const fs = require('fs')
+    const fs = require('fs')    
     console.log('masuk createfilepathhhhh')
-    let image = req.body.image
-    // console.log(image);
+    console.log(req.body)
+       let image = req.body.image
+    console.log(`!!!!!!!!!!!!!!!!!!!`)
+    console.log(image);
     
     const base64Data = image.replace(/^data:image\/png;base64,|^data:image\/jpeg;base64,/, "");
     // console.log(base64Data,"aaaaaa")

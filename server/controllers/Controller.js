@@ -1,16 +1,14 @@
-
+const { wrapAsync, givesError } = require('../helpers')
+const { User } = require('../models/user')
 class Controller {
-
-    static async postPicture(req, res) {
+    static async postPicture(req, res, next) {
         try {
-            console.log(req.file, 'heheheeh');
-            res.status(200).json(req.file)
+            let user = { nama: req.body.nama, img: req.file.cloudStoragePublicUrl }
+            user = await User.create(user)
+            if (user) res.status(200).json(user)
         } catch (error) {
-            res.status(500).json(error)
-
+            next(error)
         }
-        
-        
     }
 }
 
